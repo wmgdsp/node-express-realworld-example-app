@@ -8,7 +8,8 @@
     "start": "node ./app.js",
     "start:background": "nohup node ./app.js > /dev/null 2>&1 &",
     "dev": "nodemon ./app.js",
-    "test": "newman run ./tests/api-tests.postman.json -e ./tests/env-api-tests.postman.json",
+    "test:api": "newman run ./tests/api-tests.postman.json -e ./tests/env-api-tests.postman.json",
+    "test:unit": "jest",
     "stop": "lsof -ti :3000 | xargs kill",
     "mongo:stop": "docker stop realworld-mongo && docker rm realworld-mongo"
   },
