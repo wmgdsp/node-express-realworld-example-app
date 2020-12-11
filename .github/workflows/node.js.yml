@@ -35,7 +35,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - run: ls -alh
-    - run: du -sh --max-depth=1 .
+    - run: du -h --max-depth=1 .
 
     - uses: actions/cache@v2
       with:
@@ -48,7 +48,7 @@ jobs:
       run: npm i
 
     - run: ls -alh
-    - run: du -sh --max-depth=1 .
+    - run: du -h --max-depth=1 .
 
     - name: Start server
       run: npm run start:background
