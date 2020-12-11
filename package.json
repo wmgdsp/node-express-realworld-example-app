@@ -10,6 +10,8 @@
     "dev": "nodemon ./app.js",
     "test:api": "newman run ./tests/api-tests.postman.json -e ./tests/env-api-tests.postman.json",
     "test:unit": "jest",
+    "lint": "standard --env jest",
+    "lint:fix": "standard --fix",
     "stop": "lsof -ti :3000 | xargs kill",
     "mongo:stop": "docker stop realworld-mongo && docker rm realworld-mongo"
   },
@@ -41,6 +43,7 @@
   "devDependencies": {
     "jest": "^26.6.3",
     "newman": "^3.8.2",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "standard": "^16.0.3"
   }
 }
