@@ -11,7 +11,7 @@ on:
 
 jobs:
   api-tests:
-    name: API Tests
+    name: API tests
     runs-on: ubuntu-latest
 
     strategy:
@@ -34,11 +34,55 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
+    - run: ls -alh
+    - run: du -h --max-depth=1 .
+
+    - uses: actions/cache@v2
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
     - name: Install dependencies
-      run: npm ci
+      run: npm i
+
+    - run: ls -alh
+    - run: du -h --max-depth=1 .
 
     - name: Start server
       run: npm run start:background
       
     - name: Run API tests
-      run: npm test
+      run: npm run test:api
+
+  unit-tests:
+    name: Unit tests
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x]
+
+    steps:
+
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - uses: actions/cache@v2
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - name: Install dependencies
+      run: npm i
+
+    - name: Run unit tests
+      run: npm run test:unit
